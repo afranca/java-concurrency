@@ -1,24 +1,35 @@
-package com.alexandrefranca.producer.lock;
+package com.alexandrefranca.producer.executor;
 
 import com.alexandrefranca.util.ThreadColor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static com.alexandrefranca.producer.lock.ProducerConsumerLock.EOF;
 
-public class ProducerConsumerLock {
+public class ProducerConsumerExecutorService {
     public static final String EOF = "EOF";
 
     public static void main(String[] args) {
 
         List<String> buffer = new ArrayList<String>();
         ReentrantLock bufferLock = new ReentrantLock();
-        new Thread( new Producer(buffer, ThreadColor.ANSI_BLUE, bufferLock)).start();
-        new Thread( new Consumer(buffer, ThreadColor.ANSI_RED, bufferLock)).start();
-        new Thread( new Consumer(buffer, ThreadColor.ANSI_GREEN, bufferLock)).start();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        Producer producer = new Producer(buffer, ThreadColor.ANSI_BLUE, bufferLock);
+        Consumer consumer1 = new Consumer(buffer, ThreadColor.ANSI_RED, bufferLock);
+        Consumer consumer2=  new Consumer(buffer, ThreadColor.ANSI_GREEN, bufferLock);
+
+        executorService.execute(producer);
+        executorService.execute(consumer1);
+        executorService.execute(consumer2);
+
+        executorService.shutdown();
+
 
     }
 }
@@ -82,7 +93,7 @@ class Consumer implements Runnable{
                     if (buffer.isEmpty()) {
                         continue;
                     }
-                    System.out.println(color + "The counter = "+ counter);
+                    //System.out.println(color + "The counter = "+ counter);
                     counter = 0;
                     if (buffer.get(0).equals(EOF)) {
                         System.out.println(color + "Consumer: Exiting");
