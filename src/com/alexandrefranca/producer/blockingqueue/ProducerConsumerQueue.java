@@ -99,6 +99,7 @@ class Consumer implements Runnable{
     @Override
     public void run() {
         while(true){
+            synchronized (buffer) {
                 try {
                     if (buffer.isEmpty()) {
                         continue;
@@ -109,9 +110,10 @@ class Consumer implements Runnable{
                     } else {
                         System.out.println(color + "Consumer: Removed -> " + buffer.take());
                     }
-                } catch(InterruptedException e) {
-                    System.out.println(color+"Consumer: InterruptedException occurred");
+                } catch (InterruptedException e) {
+                    System.out.println(color + "Consumer: InterruptedException occurred");
                 }
+            }
         }
     }
 }
