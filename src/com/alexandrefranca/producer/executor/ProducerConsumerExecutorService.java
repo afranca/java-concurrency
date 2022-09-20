@@ -18,7 +18,7 @@ public class ProducerConsumerExecutorService {
         List<String> buffer = new ArrayList<String>();
         ReentrantLock bufferLock = new ReentrantLock();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
         Producer producer = new Producer(buffer, ThreadColor.ANSI_BLUE, bufferLock);
         Consumer consumer1 = new Consumer(buffer, ThreadColor.ANSI_RED, bufferLock);
         Consumer consumer2=  new Consumer(buffer, ThreadColor.ANSI_GREEN, bufferLock);
@@ -30,7 +30,7 @@ public class ProducerConsumerExecutorService {
         Future<String> future = executorService.submit(new Callable<String>() {
             @Override
             public String call() throws Exception {
-                //System.out.println(ThreadColor.ANSI_WHITE+"I'm being printed from the Callable");
+                System.out.println(ThreadColor.ANSI_YELLOW+"I'm being printed from the Callable");
                 return  ThreadColor.ANSI_YELLOW+"This is the callable result";
             }
         });
@@ -81,7 +81,7 @@ class Producer implements Runnable{
             }
         }
 
-        System.out.println(color + "Adding EOF and exiting...");
+        System.out.println(color + "Producer: Adding EOF and exiting...");
         bufferLock.lock();
         buffer.add("EOF");
         bufferLock.unlock();
