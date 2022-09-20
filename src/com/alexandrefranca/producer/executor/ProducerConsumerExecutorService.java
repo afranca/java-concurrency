@@ -5,8 +5,7 @@ import com.alexandrefranca.util.ThreadColor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static com.alexandrefranca.producer.lock.ProducerConsumerLock.EOF;
@@ -27,6 +26,22 @@ public class ProducerConsumerExecutorService {
         executorService.execute(producer);
         executorService.execute(consumer1);
         executorService.execute(consumer2);
+
+        Future<String> future = executorService.submit(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                //System.out.println(ThreadColor.ANSI_WHITE+"I'm being printed from the Callable");
+                return  ThreadColor.ANSI_YELLOW+"This is the callable result";
+            }
+        });
+
+        try{
+            System.out.println(future.get());
+        } catch (ExecutionException e){
+            System.out.println("Something went wrong during execution");
+        } catch (InterruptedException e){
+            System.out.println("Thread was interrupted");
+        }
 
         executorService.shutdown();
 
