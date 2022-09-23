@@ -8,19 +8,10 @@ public class GreetingProblem {
         final PolitePerson jane = new PolitePerson("Jane", ThreadColor.ANSI_BLUE);
         final PolitePerson john = new PolitePerson("John", ThreadColor.ANSI_RED);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                jane.sayHello(john);
-            }
-        }).start();
+        new Thread((Runnable) () -> { jane.sayHello(john); }).start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                john.sayHello(jane);
-            }
-        }).start();
+        new Thread((Runnable) () -> { john.sayHello(jane); }).start();
+
     }
 
     // 1. Thread1 acquires the lock on the jane object and enters the sayHello() method.
