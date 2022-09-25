@@ -24,7 +24,6 @@ public class Starvation {
         t3.start();
         t4.start();
         t5.start();
-
     }
 
     private static class Worker implements Runnable{
