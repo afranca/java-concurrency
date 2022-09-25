@@ -2,9 +2,11 @@ package com.alexandrefranca.starvation;
 
 import com.alexandrefranca.util.ThreadColor;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class FairLock {
 
-    public static Object lock = new Object();
+    public static ReentrantLock lock = new ReentrantLock(true);
 
     public static void main(String[] args) {
         Thread t1 = new Thread(new FairLock.Worker(ThreadColor.ANSI_RED), "P10");
@@ -36,11 +38,15 @@ public class FairLock {
         @Override
         public void run() {
             for(int i=0; i<100; i++){
-                synchronized (lock){
+                lock.lock();
+                try{
                     System.out.format(colour+"%s: runCount = %d\n",
                             Thread.currentThread().getName(),
                             count++);
+                } finally {
+                    lock.unlock();
                 }
+
             }
         }
     }
