@@ -1,6 +1,6 @@
 package com.alexandrefranca.deadlock;
 
-import com.alexandrefranca.util.ThreadColor;
+import com.alexandrefranca.ThreadColor;
 
 public class GreetingProblem {
 

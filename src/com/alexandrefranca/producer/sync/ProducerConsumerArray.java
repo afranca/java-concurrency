@@ -1,11 +1,12 @@
 package com.alexandrefranca.producer.sync;
 
-import com.alexandrefranca.util.ThreadColor;
+import com.alexandrefranca.ThreadColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.timbuchalka.lec275.Main.EOF;
+import static com.alexandrefranca.write_read.Constants.EOF;
+
 
 public class ProducerConsumerArray {
 

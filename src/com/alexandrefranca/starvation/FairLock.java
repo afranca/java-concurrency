@@ -1,6 +1,6 @@
 package com.alexandrefranca.starvation;
 
-import com.alexandrefranca.util.ThreadColor;
+import com.alexandrefranca.ThreadColor;
 
 import java.util.concurrent.locks.ReentrantLock;
 

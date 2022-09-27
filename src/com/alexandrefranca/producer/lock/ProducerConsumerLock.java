@@ -1,6 +1,6 @@
 package com.alexandrefranca.producer.lock;
 
-import com.alexandrefranca.util.ThreadColor;
+import com.alexandrefranca.ThreadColor;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.alexandrefranca.producer.blockingqueue;
 
-import com.alexandrefranca.util.ThreadColor;
+import com.alexandrefranca.ThreadColor;
 
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
