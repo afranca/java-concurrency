@@ -2,13 +2,10 @@ package com.alexandrefranca.challenge1;
 
 import com.alexandrefranca.ThreadColor;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 public class BankAccountMain {
 
     public static void main(String[] args) {
 
-        ReentrantLock lock = new ReentrantLock();
         BankAccount account = new BankAccount("12345-678", 1000.00);
 
         new Thread((Runnable) () -> {
@@ -24,6 +21,12 @@ public class BankAccountMain {
             account.withdraw(100);
             System.out.println(ThreadColor.ANSI_YELLOW+"withdraw: 100");
         }).start();
+
+        try {
+            Thread.sleep(1_000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println(ThreadColor.ANSI_BLUE+"Balance:"+ account.getBalance());
 
