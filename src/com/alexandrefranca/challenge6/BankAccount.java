@@ -37,7 +37,7 @@ class BankAccount {
     public void withdraw(double amount) {
         boolean status = false;
         try {
-            if (lock.tryLock(1, TimeUnit.SECONDS)){
+            if (lock.tryLock(1000, TimeUnit.MILLISECONDS)){
                 try {
                     balance -= amount;
                     status = true;
