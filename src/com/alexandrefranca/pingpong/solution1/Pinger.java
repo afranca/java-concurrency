@@ -2,20 +2,22 @@ package com.alexandrefranca.pingpong.solution1;
 
 public class Pinger implements Runnable {
 
-    Ball ball;
+    //Ball ball;
     String color;
+    boolean pongWait;
 
-    public Pinger(Ball ball, String color) {
-        this.ball = ball;
+    public Pinger(boolean pongWait, String color) {
+        //this.ball = ball;
         this.color = color;
+        this.pongWait = pongWait;
     }
 
     @Override
     public void run() {
 
-        while(true){
+        while(!Thread.currentThread().isInterrupted()){
             synchronized (this) {
-                while (!ball.getPongMustWait()) {
+                while (!pongWait) {
                     try {
                         wait();
                     } catch (InterruptedException e) {
@@ -23,8 +25,8 @@ public class Pinger implements Runnable {
                     }
                 }
                 System.out.println(color + "Ping");
-                ball.setPongMustWait(Boolean.FALSE);
-                System.out.println(color+"PongMustWait:"+ball.getPongMustWait() + " | "+ball);
+                pongWait = false;
+                System.out.println(color+"PongMustWait:"+pongWait);
             }
         }
     }

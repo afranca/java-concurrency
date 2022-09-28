@@ -2,29 +2,30 @@ package com.alexandrefranca.pingpong.solution1;
 
 public class Ponger implements Runnable{
 
-    Ball ball;
+    //Ball ball;
     String color;
+    boolean pongWait;
 
-    public Ponger(Ball ball, String color) {
-        this.ball = ball;
+    public Ponger(boolean pongWait, String color) {
+        this.pongWait = pongWait;
         this.color = color;
     }
 
     @Override
     public void run() {
 
-        while(true){
-            synchronized (this) {
-                while (ball.getPongMustWait()) {
+        while(!Thread.currentThread().isInterrupted()){
+            synchronized(this) {
+                while (pongWait) {
                     try {
-                        System.out.println(color+"PongMustWait:"+ball.getPongMustWait() + " | "+ball);
+                        System.out.println(color+"PongMustWait:"+pongWait);
                         wait();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 System.out.println(color + "Pong");
-                ball.setPongMustWait(Boolean.FALSE);
+                pongWait = false;
             }
         }
 

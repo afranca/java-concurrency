@@ -4,17 +4,26 @@ import com.alexandrefranca.ThreadColor;
 
 public class PingPong1 {
 
-    public static  Ball ball = new Ball(Boolean.TRUE);
+    //public Ball ball = new Ball(Boolean.TRUE);
+    public boolean pongWait=true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
+        PingPong1 main = new PingPong1();
 
         System.out.println("Starting Ping Pong");
 
-        new Thread(new Pinger(ball, ThreadColor.ANSI_YELLOW)).start();
+        Thread pingThread = new Thread(new Pinger(main.pongWait, ThreadColor.ANSI_YELLOW));
+        Thread pongThread = new Thread(new Ponger(main.pongWait, ThreadColor.ANSI_PURPLE));
 
-        new Thread(new Ponger(ball, ThreadColor.ANSI_PURPLE)).start();
+        pingThread.start();
+        pongThread.start();
 
-
+        //stop threads after 5 seconds
+        Thread.sleep(5*1000);
+        pingThread.interrupt();
+        pongThread.interrupt();
     }
+
+
 
 }
