@@ -4,41 +4,16 @@ import com.alexandrefranca.ThreadColor;
 
 public class PingPong1 {
 
+    public static  Ball ball = new Ball(Boolean.TRUE);
+
     public static void main(String[] args) {
+
         System.out.println("Starting Ping Pong");
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    System.out.println(ThreadColor.ANSI_YELLOW+"Ping");
-                    try {
-                        wait();
-                        notifyAll();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }).start();
+        new Thread(new Pinger(ball, ThreadColor.ANSI_YELLOW)).start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    System.out.println(ThreadColor.ANSI_PURPLE+"Pong");
-                    try {
-                        wait();
-                        notifyAll();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }).start();
+        new Thread(new Ponger(ball, ThreadColor.ANSI_PURPLE)).start();
 
-
-        //System.out.println("Finished Ping Pong");
 
     }
 
