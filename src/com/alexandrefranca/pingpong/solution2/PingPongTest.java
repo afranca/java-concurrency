@@ -10,13 +10,11 @@ import com.alexandrefranca.ThreadColor;
 public class PingPongTest {
 
     public static void main(String[] args) {
-        Ball msg = new Ball("Game Starts");
-
-        new Thread(new Pong(msg, ThreadColor.ANSI_PURPLE),"pong-thread").start();
-
-        new Thread(new Ping(msg, ThreadColor.ANSI_YELLOW), "ping-thread").start();
-
-        System.out.println("All the threads are started");
+        Ball msg = new Ball();
+        Thread ponger = new Thread(new Pong(msg, ThreadColor.ANSI_PURPLE));
+        Thread pinger = new Thread(new Ping(msg, ThreadColor.ANSI_YELLOW));
+        ponger.start();
+        pinger.start();
     }
 
 }

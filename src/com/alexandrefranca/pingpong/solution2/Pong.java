@@ -1,5 +1,7 @@
 package com.alexandrefranca.pingpong.solution2;
 
+import java.util.Random;
+
 public class Pong implements Runnable{
     
     private Ball ball;
@@ -12,18 +14,29 @@ public class Pong implements Runnable{
 
     @Override
     public void run() {
-        String name = Thread.currentThread().getName();
-        synchronized (ball) {
-            try{
-                //System.out.println(color+" waiting for Ping at:"+System.currentTimeMillis());
-                ball.wait();
-            }catch(InterruptedException e){
-                e.printStackTrace();
+
+        while(true){
+            synchronized(ball){
+                while(ball.getMsg().equals("Pong")){
+                    try {
+                        ball.wait(); //wait for Ping
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                // This block is just to cause a delay
+                // between Ping and Pong
+                try {
+                    Thread.sleep(new Random().nextInt(600));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                ball.setMsg("Pong");
+                System.out.println(color+ball.getMsg());
+                ball.notifyAll();
             }
-            //System.out.println(color+" got notified at:"+System.currentTimeMillis());
-            //process the message now
-            System.out.println(color+" ball message: "+ ball.getMsg());
         }
     }
-
 }

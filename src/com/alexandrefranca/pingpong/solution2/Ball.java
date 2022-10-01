@@ -3,8 +3,8 @@ package com.alexandrefranca.pingpong.solution2;
 public class Ball {
     private String msg;
     
-    public Ball(String str){
-        this.msg=str;
+    public Ball(){
+        this.msg="Pong";
     }
 
     public String getMsg() {
